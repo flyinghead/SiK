@@ -77,8 +77,8 @@ uint8_t seen_msp_status;
 // monitoring of link quality
 static void check_heartbeat(__xdata uint8_t * __pdata buf)
 {
-        if (buf[0] == '$' && buf[4] == 101) {
-		// looks like a MSP_STATUS message answer so we are at the FC side
+        if (buf[0] == '$' && buf[2] == '<' && buf[4] == 101) {
+		// looks like a MSP_STATUS message request so we are at the ground station side
 		// So we can inject radio status packets from this side.
                 // Count to 5 before send a status message (it fits to 5hz update time)
 		seen_msp_status++;
