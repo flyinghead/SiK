@@ -132,7 +132,7 @@ __pdata uint8_t test_display;
 static __bit send_statistics;
 
 /// set when we should send a MAVLink report pkt
-extern bool seen_mavlink;
+extern uint8_t seen_msp_status;
 
 struct tdm_trailer {
 	uint16_t window:13;
@@ -501,8 +501,8 @@ tdm_serial_loop(void)
 			test_display = 0;
 		}
 
-		if (seen_mavlink && feature_mavlink_framing && !at_mode_active) {
-			seen_mavlink = false;
+		if ((seen_msp_status >= 5) && feature_mavlink_framing && !at_mode_active) {
+			seen_msp_status = 0;
 			MAVLink_report();
 		}
 
